@@ -34,3 +34,10 @@ The script supports LXRCore by default, but also works with QBRCore and RSGCore.
 
 ```lua
 Config.Framework = 'lxr-core' -- or 'qbr-core', 'rsg-core'
+```
+
+## Need More Support? 
+- [LXR Discord](https://discord.gg/9a4NYkmkNR)
+
+## Coming Soon!
+- API support for other scripts (police, criminal, etc.)

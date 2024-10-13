@@ -17,7 +17,7 @@ if Config.escape.active then
                     local rando = math.random(0, 5000)
     
                     if Config.escape.lotonumb[rando] then
-                        TriggerServerEvent('bccblindfold:toggleblindfold', 'self', false)
+                        TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
                         active = false
                     end
                 end
@@ -128,36 +128,76 @@ AddEventHandler('bccblindfold:blindfolditem', function()
     selfblinded = false
     local closestPlayer, closestDistance = GetClosestPlayer()
     if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
-        TriggerServerEvent('bccblindfold:toggleblindfold', closestPlayer.server, true)
+        TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, true)
     end
 end)
 
 if Config.blindfoldcommand then
-    RegisterCommand("blindfold", function(source, args, rawCommand)
+    
+    -- Framework-specific client initialization
+    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
+        -- Register commands based on framework
+        RegisterCommand
+    else
+        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
+    end
+
+    RegisterCommand
+("blindfold", function(source, args, rawCommand)
         selfblinded = false
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
-            TriggerServerEvent('bccblindfold:toggleblindfold', closestPlayer.server, true)
+            TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, true)
         end
     end, false) 
 end
 
 if Config.blindfoldcommand then
-    RegisterCommand("blindfoldme", function(source, args, rawCommand)
+    
+    -- Framework-specific client initialization
+    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
+        -- Register commands based on framework
+        RegisterCommand
+    else
+        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
+    end
+
+    RegisterCommand
+("blindfoldme", function(source, args, rawCommand)
         selfblinded = true
-        TriggerServerEvent('bccblindfold:toggleblindfold', 'self', true)
+        TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', true)
     end, false)
 
-    RegisterCommand("unblindfoldme", function(source, args, rawCommand)
+    
+    -- Framework-specific client initialization
+    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
+        -- Register commands based on framework
+        RegisterCommand
+    else
+        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
+    end
+
+    RegisterCommand
+("unblindfoldme", function(source, args, rawCommand)
         if selfblinded then
-            TriggerServerEvent('bccblindfold:toggleblindfold', 'self', false) 
+            TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false) 
         end
     end, false)
 end
 
-RegisterCommand("unblindfold", function(source, args, rawCommand)
+
+    -- Framework-specific client initialization
+    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
+        -- Register commands based on framework
+        RegisterCommand
+    else
+        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
+    end
+
+    RegisterCommand
+("unblindfold", function(source, args, rawCommand)
     local closestPlayer, closestDistance = GetClosestPlayer()
     if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
-        TriggerServerEvent('bccblindfold:toggleblindfold', closestPlayer.server, false)
+        TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, false)
     end
 end, false)

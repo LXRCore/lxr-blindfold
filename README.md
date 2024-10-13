@@ -37,7 +37,7 @@ Config.Framework = 'lxr-core' -- or 'qbr-core', 'rsg-core'
 ```
 
 ## Need More Support? 
-- [LXR Discord](https://discord.gg/9a4NYkmkNR)
+- [LXR Discord]
 
 ## Coming Soon!
 - API support for other scripts (police, criminal, etc.)

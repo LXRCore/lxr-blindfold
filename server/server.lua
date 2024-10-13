@@ -1,23 +1,56 @@
-local VORPcore = {}
-TriggerEvent("getCore", function(core)
-	VORPcore = core
-end)
 
-local VORPInv =  exports.vorp_inventory:vorp_inventoryApi()
+    -- Detect framework
+    local Framework = Config.framework
+    if Framework == 'lxr-core' then
+        LXRcore = exports['lxr-core']:GetCoreObject()
+    elseif Framework == 'qbr-core' then
+        QBRcore = exports['qbr-core']:GetCoreObject()
+    elseif Framework == 'rsg-core' then
+        RSGcore = exports['rsg-core']:GetCoreObject()
+    else
+        print("Unsupported framework, please set Config.framework correctly.")
+    end
+    
 
 
-RegisterNetEvent('bccblindfold:toggleblindfold')
-AddEventHandler('bccblindfold:toggleblindfold', function(player, toggle)
+RegisterNetEvent('lxrblindfold:toggleblindfold')
+AddEventHandler('lxrblindfold:toggleblindfold', function(player, toggle)
 	local _source = source
 	local passed = true
 	if player ~= nil then
 		if Config.blindfolditem and toggle == true then
-			local itemCount = VORPInv.getItemCount(_source, 'blindfold')
+			local itemCount = 
+    if Framework == 'lxr-core' then
+        LXRInv = exports['lxr-core']:GetInventory()
+    elseif Framework == 'qbr-core' then
+        QBRInv = exports['qbr-core']:GetInventory()
+    elseif Framework == 'rsg-core' then
+        RSGInv = exports['rsg-core']:GetInventory()
+    end
+    .getItemCount(_source, 'blindfold')
 			if itemCount > 0 then
-				VORPInv.subItem(_source, 'blindfold', 1)
+				
+    if Framework == 'lxr-core' then
+        LXRInv = exports['lxr-core']:GetInventory()
+    elseif Framework == 'qbr-core' then
+        QBRInv = exports['qbr-core']:GetInventory()
+    elseif Framework == 'rsg-core' then
+        RSGInv = exports['rsg-core']:GetInventory()
+    end
+    .subItem(_source, 'blindfold', 1)
 			else
 				passed = false
-				VORPcore.NotifyRightTip(_source, Config.lang.noitem,4000)
+				
+    if Framework == 'lxr-core' then
+        LXRcore.Functions.Notify
+    elseif Framework == 'qbr-core' then
+        QBRcore.Functions.Notify
+    elseif Framework == 'rsg-core' then
+        RSGcore.Functions.Notify
+    else
+        print("Unsupported framework.")
+    end
+    (_source, Config.lang.noitem,4000)
 			end
 		end
 
@@ -32,18 +65,52 @@ AddEventHandler('bccblindfold:toggleblindfold', function(player, toggle)
 			local comps = Character.comps
 			local playerSex = string.gsub(tostring(skin["sex"]), "mp_", "")
 		
-			TriggerClientEvent('bccblindfold:togblindfold', player, playerSex, comps, toggle)
+			TriggerClientEvent('lxrblindfold:togblindfold', player, playerSex, comps, toggle)
 		end
 	else
-		VORPcore.NotifyRightTip(_source, Config.lang.noplayers,4000)
+		
+    if Framework == 'lxr-core' then
+        LXRcore.Functions.Notify
+    elseif Framework == 'qbr-core' then
+        QBRcore.Functions.Notify
+    elseif Framework == 'rsg-core' then
+        RSGcore.Functions.Notify
+    else
+        print("Unsupported framework.")
+    end
+    (_source, Config.lang.noplayers,4000)
 	end
 end)
 
 if Config.blindfolditem then
 	-- Facemask Usable Item
-	VORPInv.RegisterUsableItem('blindfold', function(data)
-		-- VORPInv.subItem(data.source, 'blindfold', 1)
-		TriggerClientEvent("bccblindfold:blindfolditem", data.source)
-		VORPInv.CloseInv(data.source)
+	
+    if Framework == 'lxr-core' then
+        LXRInv = exports['lxr-core']:GetInventory()
+    elseif Framework == 'qbr-core' then
+        QBRInv = exports['qbr-core']:GetInventory()
+    elseif Framework == 'rsg-core' then
+        RSGInv = exports['rsg-core']:GetInventory()
+    end
+    .RegisterUsableItem('blindfold', function(data)
+		-- 
+    if Framework == 'lxr-core' then
+        LXRInv = exports['lxr-core']:GetInventory()
+    elseif Framework == 'qbr-core' then
+        QBRInv = exports['qbr-core']:GetInventory()
+    elseif Framework == 'rsg-core' then
+        RSGInv = exports['rsg-core']:GetInventory()
+    end
+    .subItem(data.source, 'blindfold', 1)
+		TriggerClientEvent("lxrblindfold:blindfolditem", data.source)
+		
+    if Framework == 'lxr-core' then
+        LXRInv = exports['lxr-core']:GetInventory()
+    elseif Framework == 'qbr-core' then
+        QBRInv = exports['qbr-core']:GetInventory()
+    elseif Framework == 'rsg-core' then
+        RSGInv = exports['rsg-core']:GetInventory()
+    end
+    .CloseInv(data.source)
 	end)		
 end

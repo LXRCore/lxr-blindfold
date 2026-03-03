@@ -48,8 +48,8 @@ server_script {
 }
 
 client_script {
-    'client/client.lua',
-    'client/utils.lua'
+    'client/utils.lua',
+    'client/client.lua'
 }
 
 shared_script {

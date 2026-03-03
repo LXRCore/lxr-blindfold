@@ -40,7 +40,7 @@ if Config.escape.active then
         while true do
             Wait(0)
             if active then
-                if IsControlJustPressed(0, Config.escape.button) then
+                if IsControlJustPressed(0, Config.Escape.button) then
                     SendNUIMessage({
                         type  = 'escapekeypress',
                         state = true
@@ -129,7 +129,7 @@ function GetClosestPlayer()
 
         if not usePlayerPed or (usePlayerPed and players[i] ~= playerId) then
             local targetCoords = GetEntityCoords(tgt)
-            local distance = #(coords - targetCoords)
+            local distance     = #(coords - targetCoords)
 
             if closestDistance == -1 or closestDistance > distance then
                 closest = {

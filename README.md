@@ -1,59 +1,133 @@
-# 🐺 LXR Blindfold
-> **Player Restraint System for RedM** — The Land of Wolves  
-> **Author:** iBoss21 / The Lux Empire · **Store:** [theluxempire.tebex.io](https://theluxempire.tebex.io) · **Discord:** [discord.gg/CrKcWdfd3A](https://discord.gg/CrKcWdfd3A)
+# 🐺 LXR Blindfold System
+> **wolves.land** — The Land of Wolves | RedM Blindfold & Restraint Script
+
+```
+██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
+██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
+██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
+███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+```
+
+[![wolves.land](https://img.shields.io/badge/🐺%20wolves.land-The%20Land%20of%20Wolves-8B0000)](https://www.wolves.land)
+[![Store](https://img.shields.io/badge/Store-theluxempire.tebex.io-blue)](https://theluxempire.tebex.io)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2)](https://discord.gg/CrKcWdfd3A)
+
+---
+
+## ═══════════════════════════════════════════════════════
+## SERVER INFORMATION
+## ═══════════════════════════════════════════════════════
+
+| Field       | Value                                      |
+|-------------|--------------------------------------------|
+| Server      | The Land of Wolves 🐺                      |
+| Developer   | iBoss21 / The Lux Empire                   |
+| Website     | https://www.wolves.land                    |
+| Discord     | https://discord.gg/CrKcWdfd3A             |
+| Store       | https://theluxempire.tebex.io              |
+| GitHub      | https://github.com/iBoss21                 |
 
 ---
 
 ## Features
-- Blindfold the nearest player
-- Blindfold yourself
-- Commands and item-based blindfold support
-- Chance to break free (configurable)
-- Multi-framework support: **LXR-Core** (primary), **RSG-Core** (primary), **VORP Core** (supported)
-- Fully configurable features and language strings
+
+- 🎭 Blindfold the nearest player with a command or item
+- 🔒 Blindfold yourself for immersive RP scenarios
+- 🎲 Configurable random chance to break free from a blindfold
+- 🛒 Optional item (`blindfold`) required to use the script
+- 🌐 Multi-framework support — LXR-Core, RSG-Core, VORP Core, QBR-Core
+- ⚙️ Fully configurable language, button bindings, and escape odds
+
+---
+
+## Framework Support
+
+| Framework   | Status              |
+|-------------|---------------------|
+| LXR-Core    | ✅ Primary           |
+| RSG-Core    | ✅ Primary           |
+| VORP Core   | ✅ Supported/Legacy  |
+| QBR-Core    | ✅ Optional          |
+| Standalone  | ✅ Fallback          |
+
+---
 
 ## Commands
-| Command | Description |
-|---------|-------------|
-| `/blindfold` | Apply blindfold to the nearest player |
-| `/unblindfold` | Remove blindfold from the nearest player |
-| `/blindfoldme` | Apply a blindfold to yourself |
-| `/unblindfoldme` | Remove your self-applied blindfold |
+
+| Command         | Description                                      |
+|-----------------|--------------------------------------------------|
+| `/blindfold`    | Apply blindfold to the nearest player            |
+| `/unblindfold`  | Remove blindfold from the nearest player         |
+| `/blindfoldme`  | Apply blindfold to yourself                      |
+| `/unblindfoldme`| Remove your own self-applied blindfold           |
+
+---
 
 ## Installation
 
 ### Step 1 — Download & Install
-1. Download this resource.
-2. Place the `lxr-blindfold` folder into your `resources/` directory.
-3. Add `ensure lxr-blindfold` to your `server.cfg`.
 
-### Step 2 — Framework Configuration
+1. Download or clone this repository.
+2. Copy the `lxr-blindfold` folder into your server's `resources/` directory.
+3. Add the following line to your `server.cfg`:
+   ```
+   ensure lxr-blindfold
+   ```
+
+### Step 2 — Configure Framework
+
 Open `config.lua` and set your framework:
 
 ```lua
-Config.Framework = 'lxr-core'  -- 'lxr-core' | 'rsg-core' | 'vorp_core'
+Config.Framework = 'lxr-core' -- 'lxr-core' | 'rsg-core' | 'vorp_core' | 'qbr-core' | 'standalone'
 ```
 
 ### Step 3 — Optional: Item Support
-- Add the SQL from `items/blindfold.sql` to your database.
-- Add `items/blindfold.png` to your inventory image folder.
-- Ensure `Config.BlindFoldItem = true` in `config.lua`.
+
+If `Config.blindfolditem = true`, players must have a `blindfold` item in their inventory.
+
+1. Import the SQL from `items/blindfold.sql` into your database.
+2. Add the item image from `items/blindfold.png` to your inventory system.
+
+---
 
 ## Configuration Reference
 
 ```lua
-Config.Framework          = 'lxr-core'  -- Framework to use
-Config.BlindFoldCommand   = true         -- Enable /blindfold & /unblindfold
-Config.BlindFoldSelfCommand = true       -- Enable /blindfoldme & /unblindfoldme
-Config.BlindFoldItem      = true         -- Require item to apply blindfold
+-- config.lua
 
-Config.Escape = {
+Config.Framework = 'lxr-core'      -- Active framework
+
+Config.blindfoldcommand     = true  -- Enable /blindfold + /unblindfold
+Config.blindfoldselfcommand = true  -- Enable /blindfoldme + /unblindfoldme
+Config.blindfolditem        = true  -- Require a 'blindfold' item
+
+Config.escape = {
     active   = true,
-    lotonumb = {5, 6, 20},   -- Lucky numbers that break the blindfold (0–5000)
-    button   = 0x760A9C6F,   -- Key to attempt escape (G)
+    lotonumb = {5, 6, 20},     -- Winning numbers (0–5000) that free the player
+    button   = 0x760A9C6F,     -- G key to attempt escape
+    lang = {
+        escape = 'Attempt to Break Blindfold',
+        button = 'G'
+    }
+}
+
+Config.lang = {
+    noplayers = "No players nearby",
+    noitem    = "You are out of blindfolds",
 }
 ```
 
 ---
 
-© 2026 iBoss21 / The Lux Empire | [wolves.land](https://www.wolves.land) | All Rights Reserved
+## Need Support?
+
+- 💬 [Discord](https://discord.gg/CrKcWdfd3A)
+- 🌐 [Website](https://www.wolves.land)
+- 🛒 [Store](https://theluxempire.tebex.io)
+
+---
+
+> © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved

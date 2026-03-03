@@ -1,25 +1,33 @@
 --[[
-    ██╗     ██╗  ██╗██████╗       ██████╗ ██╗     ██╗███╗   ██╗██████╗ ███████╗ ██████╗ ██╗     ██████╗
-    ██║     ╚██╗██╔╝██╔══██╗      ██╔══██╗██║     ██║████╗  ██║██╔══██╗██╔════╝██╔═══██╗██║     ██╔══██╗
-    ██║      ╚███╔╝ ██████╔╝█████╗██████╔╝██║     ██║██╔██╗ ██║██║  ██║█████╗  ██║   ██║██║     ██║  ██║
-    ██║      ██╔██╗ ██╔══██╗╚════╝██╔══██╗██║     ██║██║╚██╗██║██║  ██║██╔══╝  ██║   ██║██║     ██║  ██║
-    ███████╗██╔╝ ██╗██║  ██║      ██████╔╝███████╗██║██║ ╚████║██████╔╝██║     ╚██████╔╝███████╗██████╔╝
-    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═════╝
+    ██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-    🐺 LXR Blindfold - Player Restraint System for RedM
+    🐺 LXR Core - Blindfold System
+    Restraint & Roleplay Immersion for RedM
 
     ═══════════════════════════════════════════════════════════════════════════════
     SERVER INFORMATION
     ═══════════════════════════════════════════════════════════════════════════════
 
-    Server:      The Land of Wolves 🐺
-    Developer:   iBoss21 / The Lux Empire
-    Website:     https://www.wolves.land
-    Discord:     https://discord.gg/CrKcWdfd3A
-    Store:       https://theluxempire.tebex.io
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
 
     ═══════════════════════════════════════════════════════════════════════════════
 
+    Framework Support:
+    - LXR Core  (Primary)
+    - RSG Core  (Primary)
+    - VORP Core (Supported)
+    - QBR Core  (Optional)
+
+    ═══════════════════════════════════════════════════════════════════════════════
     © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
 ]]
 
@@ -30,8 +38,8 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 
 name        'lxr-blindfold'
 author      'iBoss21 / The Lux Empire'
-description 'A blindfold / player-restraint script for RedM — LXR-Core, RSG-Core, VORP Core'
-version     '2.1.0'
+description '🐺 LXR Blindfold System | wolves.land | LXR-Core, RSG-Core, VORP Core'
+version     '2.0.0'
 
 lua54 'yes'
 

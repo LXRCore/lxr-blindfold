@@ -1,32 +1,41 @@
 --[[
-    ██╗     ██╗  ██╗██████╗       ██████╗ ██╗     ██╗███╗   ██╗██████╗ ███████╗ ██████╗ ██╗     ██████╗
-    ██║     ╚██╗██╔╝██╔══██╗      ██╔══██╗██║     ██║████╗  ██║██╔══██╗██╔════╝██╔═══██╗██║     ██╔══██╗
-    ██║      ╚███╔╝ ██████╔╝█████╗██████╔╝██║     ██║██╔██╗ ██║██║  ██║█████╗  ██║   ██║██║     ██║  ██║
-    ██║      ██╔██╗ ██╔══██╗╚════╝██╔══██╗██║     ██║██║╚██╗██║██║  ██║██╔══╝  ██║   ██║██║     ██║  ██║
-    ███████╗██╔╝ ██╗██║  ██║      ██████╔╝███████╗██║██║ ╚████║██████╔╝██║     ╚██████╔╝███████╗██████╔╝
-    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═════╝
+    ██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-    🐺 LXR Blindfold - Player Restraint System for RedM
+    🐺 LXR Core - Blindfold System
+    Restraint & Roleplay Immersion for RedM
 
     ═══════════════════════════════════════════════════════════════════════════════
     SERVER INFORMATION
     ═══════════════════════════════════════════════════════════════════════════════
 
-    Server:      The Land of Wolves 🐺
-    Developer:   iBoss21 / The Lux Empire
-    Website:     https://www.wolves.land
-    Discord:     https://discord.gg/CrKcWdfd3A
-    Store:       https://theluxempire.tebex.io
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
 
     ═══════════════════════════════════════════════════════════════════════════════
+
+    Version: 2.0.0
+    Performance Target: Optimized for minimal server overhead and client FPS impact
 
     Framework Support:
     - LXR Core  (Primary)
     - RSG Core  (Primary)
     - VORP Core (Supported / Legacy)
+    - QBR Core  (Optional)
     - Standalone (Fallback)
 
     ═══════════════════════════════════════════════════════════════════════════════
+    CREDITS
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Script Author: iBoss21 / The Lux Empire for The Land of Wolves
 
     © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
 ]]
@@ -61,6 +70,19 @@ end
 Config = {}
 
 -- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ SERVER BRANDING & INFO ████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
+
+Config.ServerInfo = {
+    name      = 'The Land of Wolves 🐺',
+    developer = 'iBoss21 / The Lux Empire',
+    website   = 'https://www.wolves.land',
+    discord   = 'https://discord.gg/CrKcWdfd3A',
+    store     = 'https://theluxempire.tebex.io',
+    github    = 'https://github.com/iBoss21',
+}
+
+-- ████████████████████████████████████████████████████████████████████████████████
 -- ████████████████████████ FRAMEWORK CONFIGURATION ███████████████████████████████
 -- ████████████████████████████████████████████████████████████████████████████████
 
@@ -69,22 +91,30 @@ Config = {}
     1. LXR-Core  (Primary)
     2. RSG-Core  (Primary)
     3. VORP Core (Supported / Legacy)
-    4. Standalone (Fallback)
-
-    Set to the framework your server uses:
-    'lxr-core' | 'rsg-core' | 'vorp_core' | 'standalone'
+    4. QBR-Core  (Optional)
+    5. Standalone (Fallback)
 ]]
 
-Config.Framework = 'lxr-core'
+Config.Framework = 'lxr-core' -- 'lxr-core' | 'rsg-core' | 'vorp_core' | 'qbr-core' | 'standalone'
 
 -- ████████████████████████████████████████████████████████████████████████████████
--- ████████████████████████ ESCAPE MECHANICS ██████████████████████████████████████
+-- ████████████████████████ BLINDFOLD FEATURE FLAGS ███████████████████████████████
 -- ████████████████████████████████████████████████████████████████████████████████
 
-Config.Escape = {
+Config.blindfoldcommand     = true  -- Enable /blindfold and /unblindfold commands
+Config.blindfoldselfcommand = true  -- Enable /blindfoldme and /unblindfoldme commands
+Config.blindfolditem        = true  -- Require a 'blindfold' item to use the script
+
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ ESCAPE CONFIGURATION ██████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
+
+Config.escape = {
     active   = true,
-    lotonumb = {5, 6, 20},  -- Numbers 0-5000; a match breaks the blindfold free
-    button   = 0x760A9C6F,  -- Button to attempt escape (default: G key)
+    -- Numbers between 0-5000; when the random roll matches one of these the blindfold breaks
+    lotonumb = {5, 6, 20},
+    -- Button hash to attempt escape (G key)
+    button   = 0x760A9C6F,
     lang = {
         escape = 'Attempt to Break Blindfold',
         button = 'G'
@@ -92,19 +122,16 @@ Config.Escape = {
 }
 
 -- ████████████████████████████████████████████████████████████████████████████████
--- ████████████████████████ LANGUAGE / NOTIFICATIONS ██████████████████████████████
+-- ████████████████████████ LANGUAGE / LOCALE █████████████████████████████████████
 -- ████████████████████████████████████████████████████████████████████████████████
 
-Config.Lang = {
+Config.lang = {
     noplayers = "No players nearby",
-    noitem    = "You are out of blindfolds"
+    noitem    = "You are out of blindfolds",
 }
 
 -- ████████████████████████████████████████████████████████████████████████████████
--- ████████████████████████ FEATURE TOGGLES ███████████████████████████████████████
+-- ████████████████████████ DEBUG SETTINGS ████████████████████████████████████████
 -- ████████████████████████████████████████████████████████████████████████████████
 
-Config.BlindFoldCommand     = true  -- Enable /blindfold & /unblindfold commands
-Config.BlindFoldSelfCommand = true  -- Enable /blindfoldme & /unblindfoldme commands
-Config.BlindFoldItem        = true  -- Require a 'blindfold' item to apply a blindfold
-
+Config.Debug = false -- Enable debug prints and extra logging

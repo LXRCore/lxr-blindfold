@@ -1,22 +1,40 @@
 --[[
-    ██╗     ██╗  ██╗██████╗       ██████╗ ██╗     ██╗███╗   ██╗██████╗ ███████╗ ██████╗ ██╗     ██████╗
-    ██║     ╚██╗██╔╝██╔══██╗      ██╔══██╗██║     ██║████╗  ██║██╔══██╗██╔════╝██╔═══██╗██║     ██╔══██╗
-    ██║      ╚███╔╝ ██████╔╝█████╗██████╔╝██║     ██║██╔██╗ ██║██║  ██║█████╗  ██║   ██║██║     ██║  ██║
-    ██║      ██╔██╗ ██╔══██╗╚════╝██╔══██╗██║     ██║██║╚██╗██║██║  ██║██╔══╝  ██║   ██║██║     ██║  ██║
-    ███████╗██╔╝ ██╗██║  ██║      ██████╔╝███████╗██║██║ ╚████║██████╔╝██║     ╚██████╔╝███████╗██████╔╝
-    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═════╝
+    ██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-    🐺 LXR Blindfold — Client Script
+    🐺 LXR Core - Blindfold System | CLIENT SCRIPT
+    Restraint & Roleplay Immersion for RedM
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    SERVER INFORMATION
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
 ]]
 
-local active      = false
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ STATE ████████████████████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
+
+local active     = false
 local selfblinded = false
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 ESCAPE MECHANIC THREAD
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ ESCAPE MECHANIC ███████████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
-if Config.Escape.active then
+if Config.escape.active then
     Citizen.CreateThread(function()
         active = true
         while true do
@@ -30,13 +48,13 @@ if Config.Escape.active then
 
                     local rando = math.random(0, 5000)
 
-                    if Config.Escape.lotonumb[rando] then
+                    if Config.escape.lotonumb[rando] then
                         TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
                         active = false
                     end
                 end
 
-                if IsControlJustReleased(0, Config.Escape.button) then
+                if IsControlJustReleased(0, Config.escape.button) then
                     SendNUIMessage({
                         type  = 'escapekeypress',
                         state = false
@@ -47,9 +65,9 @@ if Config.Escape.active then
     end)
 end
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 CLOTHING / WEARABLE HELPER
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ WEARABLE / CLOTHING HELPERS ███████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 function SetWearable(pcomps, playerSex, playerPed, toggle)
     for k, v in pairs(pcomps) do
@@ -89,9 +107,9 @@ function SetWearable(pcomps, playerSex, playerPed, toggle)
     })
 end
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 CLOSEST PLAYER UTILITY
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ CLOSEST PLAYER HELPER █████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 function GetClosestPlayer()
     local players, closestDistance, closestPlayer = GetActivePlayers(), -1, -1
@@ -125,9 +143,9 @@ function GetClosestPlayer()
     return closest, closestDistance
 end
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 NET EVENTS
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ NET EVENTS ████████████████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 RegisterNetEvent('lxrblindfold:togblindfold')
 AddEventHandler('lxrblindfold:togblindfold', function(playerSex, comps, toggle)
@@ -155,12 +173,12 @@ AddEventHandler('lxrblindfold:blindfolditem', function()
     end
 end)
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 COMMANDS
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ COMMANDS ██████████████████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
-if Config.BlindFoldCommand then
-    RegisterCommand("blindfold", function()
+if Config.blindfoldcommand then
+    RegisterCommand("blindfold", function(source, args, rawCommand)
         selfblinded = false
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
@@ -168,7 +186,7 @@ if Config.BlindFoldCommand then
         end
     end, false)
 
-    RegisterCommand("unblindfold", function()
+    RegisterCommand("unblindfold", function(source, args, rawCommand)
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, false)
@@ -176,13 +194,13 @@ if Config.BlindFoldCommand then
     end, false)
 end
 
-if Config.BlindFoldSelfCommand then
-    RegisterCommand("blindfoldme", function()
+if Config.blindfoldselfcommand then
+    RegisterCommand("blindfoldme", function(source, args, rawCommand)
         selfblinded = true
         TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', true)
     end, false)
 
-    RegisterCommand("unblindfoldme", function()
+    RegisterCommand("unblindfoldme", function(source, args, rawCommand)
         if selfblinded then
             TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
         end

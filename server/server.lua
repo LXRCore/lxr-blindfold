@@ -1,132 +1,185 @@
 --[[
-    ██╗     ██╗  ██╗██████╗       ██████╗ ██╗     ██╗███╗   ██╗██████╗ ███████╗ ██████╗ ██╗     ██████╗
-    ██║     ╚██╗██╔╝██╔══██╗      ██╔══██╗██║     ██║████╗  ██║██╔══██╗██╔════╝██╔═══██╗██║     ██╔══██╗
-    ██║      ╚███╔╝ ██████╔╝█████╗██████╔╝██║     ██║██╔██╗ ██║██║  ██║█████╗  ██║   ██║██║     ██║  ██║
-    ██║      ██╔██╗ ██╔══██╗╚════╝██╔══██╗██║     ██║██║╚██╗██║██║  ██║██╔══╝  ██║   ██║██║     ██║  ██║
-    ███████╗██╔╝ ██╗██║  ██║      ██████╔╝███████╗██║██║ ╚████║██████╔╝██║     ╚██████╔╝███████╗██████╔╝
-    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═════╝
+    ██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-    🐺 LXR Blindfold — Server Script
+    🐺 LXR Core - Blindfold System | SERVER SCRIPT
+    Restraint & Roleplay Immersion for RedM
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    SERVER INFORMATION
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
 ]]
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 FRAMEWORK INITIALISATION
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ FRAMEWORK INITIALISATION ██████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 local Framework = Config.Framework
-local Core, Inv
+local CoreObject = nil
 
 if Framework == 'lxr-core' then
-    Core = exports['lxr-core']:GetCoreObject()
-    Inv  = exports['lxr-core']:GetInventory()
+    CoreObject = exports['lxr-core']:GetCoreObject()
 elseif Framework == 'rsg-core' then
-    Core = exports['rsg-core']:GetCoreObject()
-    Inv  = exports['rsg-core']:GetInventory()
+    CoreObject = exports['rsg-core']:GetCoreObject()
+elseif Framework == 'qbr-core' then
+    CoreObject = exports['qbr-core']:GetCoreObject()
 elseif Framework == 'vorp_core' then
-    Core = exports['vorp_core']:GetVorp()
+    CoreObject = exports.vorp_core:GetCore()
+elseif Framework == 'standalone' then
+    -- no core object needed
 else
-    print('[lxr-blindfold] ⚠ Unsupported framework: ' .. tostring(Framework) .. '. Set Config.Framework correctly.')
+    print(string.format("[lxr-blindfold] ⚠️  Unknown framework '%s'. Supported: lxr-core, rsg-core, vorp_core, qbr-core, standalone", Framework))
 end
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 FRAMEWORK HELPER FUNCTIONS
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ HELPER FUNCTIONS ██████████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
-local function Notify(src, message, duration)
-    duration = duration or 4000
-    if Framework == 'lxr-core' or Framework == 'rsg-core' then
-        Core.Functions.Notify(src, message, duration)
+-- Send a notification to a player (server-side)
+local function Notify(source, message)
+    if Framework == 'lxr-core' and CoreObject then
+        CoreObject.Functions.Notify(source, message, 'error', 4000)
+    elseif Framework == 'rsg-core' and CoreObject then
+        CoreObject.Functions.Notify(source, message, 'error', 4000)
+    elseif Framework == 'qbr-core' and CoreObject then
+        CoreObject.Functions.Notify(source, message, 'error', 4000)
     elseif Framework == 'vorp_core' then
-        TriggerClientEvent('vorp:TipRight', src, message, duration)
+        TriggerClientEvent('vorp:TipRight', source, message, 4000)
     else
-        print('[lxr-blindfold] Notification (' .. tostring(src) .. '): ' .. tostring(message))
+        print(string.format("[lxr-blindfold] Notify -> [%s]: %s", source, message))
     end
 end
 
-local function GetItemCount(src, item)
-    if Framework == 'lxr-core' or Framework == 'rsg-core' then
-        return Inv.getItemCount(src, item)
+-- Get item count from the player's inventory
+local function GetItemCount(source, item)
+    if Framework == 'lxr-core' then
+        return exports['lxr-core']:GetInventory().getItemCount(source, item)
+    elseif Framework == 'rsg-core' then
+        return exports['rsg-core']:GetInventory().getItemCount(source, item)
+    elseif Framework == 'qbr-core' then
+        return exports['qbr-core']:GetInventory().getItemCount(source, item)
     elseif Framework == 'vorp_core' then
-        local character = Core.getUser(src).getUsedCharacter
-        return character and character.getItemCount(item) or 0
+        return exports.vorp_inventory:getItemCount(source, item)
     end
     return 0
 end
 
-local function RemoveItem(src, item, count)
-    if Framework == 'lxr-core' or Framework == 'rsg-core' then
-        Inv.subItem(src, item, count)
+-- Remove one item from the player's inventory
+local function SubItem(source, item, count)
+    if Framework == 'lxr-core' then
+        exports['lxr-core']:GetInventory().subItem(source, item, count)
+    elseif Framework == 'rsg-core' then
+        exports['rsg-core']:GetInventory().subItem(source, item, count)
+    elseif Framework == 'qbr-core' then
+        exports['qbr-core']:GetInventory().subItem(source, item, count)
     elseif Framework == 'vorp_core' then
-        local character = Core.getUser(src).getUsedCharacter
-        if character then character.subItem(item, count) end
+        exports.vorp_inventory:subItem(source, item, count)
     end
 end
 
-local function GetCharacterData(playerId)
-    if Framework == 'lxr-core' or Framework == 'rsg-core' then
-        local Player = Core.Functions.GetPlayer(playerId)
-        if Player and Player.PlayerData then
-            local skin = Player.PlayerData.skin or {}
-            local sex  = string.gsub(tostring(skin.sex or 'mp_male'), 'mp_', '')
-            return sex, json.encode(Player.PlayerData.comps or {})
-        end
+-- Close the inventory UI for a player
+local function CloseInv(source)
+    if Framework == 'lxr-core' then
+        exports['lxr-core']:GetInventory().CloseInv(source)
+    elseif Framework == 'rsg-core' then
+        exports['rsg-core']:GetInventory().CloseInv(source)
+    elseif Framework == 'qbr-core' then
+        exports['qbr-core']:GetInventory().CloseInv(source)
     elseif Framework == 'vorp_core' then
-        local character = Core.getUser(playerId).getUsedCharacter
-        if character then
-            local skin = json.decode(character.skin)
-            local sex  = string.gsub(tostring(skin['sex']), 'mp_', '')
-            return sex, character.comps
-        end
+        exports.vorp_inventory:CloseInv(source)
     end
-    return 'male', '{}'
 end
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 BLINDFOLD TOGGLE EVENT
--- ═══════════════════════════════════════════════════════════════════════════════
+-- Register an item as usable
+local function RegisterUsableItem(item, cb)
+    if Framework == 'lxr-core' then
+        exports['lxr-core']:GetInventory().RegisterUsableItem(item, cb)
+    elseif Framework == 'rsg-core' then
+        exports['rsg-core']:GetInventory().RegisterUsableItem(item, cb)
+    elseif Framework == 'qbr-core' then
+        exports['qbr-core']:GetInventory().RegisterUsableItem(item, cb)
+    elseif Framework == 'vorp_core' then
+        exports.vorp_inventory:RegisterUsableItem(item, cb)
+    end
+end
+
+-- Retrieve the character skin and clothing components for a player
+local function GetCharacterData(player)
+    if (Framework == 'lxr-core' or Framework == 'rsg-core' or Framework == 'qbr-core') and CoreObject then
+        local Player = CoreObject.Functions.GetPlayer(player)
+        if Player then
+            local skin  = json.decode(Player.PlayerData.skin  or '{}')
+            local comps = Player.PlayerData.comps or '{}'
+            return skin, comps
+        end
+    elseif Framework == 'vorp_core' and CoreObject then
+        local User = CoreObject.getUser(player)
+        if User then
+            local Character = User.getUsedCharacter
+            local skin  = json.decode(Character.skin or '{}')
+            local comps = Character.comps or '{}'
+            return skin, comps
+        end
+    end
+    return {}, '{}'
+end
+
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ MAIN EVENT: TOGGLE BLINDFOLD ██████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 RegisterNetEvent('lxrblindfold:toggleblindfold')
 AddEventHandler('lxrblindfold:toggleblindfold', function(player, toggle)
     local _source = source
     local passed  = true
 
-    if player == nil then
-        Notify(_source, Config.Lang.noplayers, 4000)
-        return
-    end
-
-    if Config.BlindFoldItem and toggle == true then
-        local itemCount = GetItemCount(_source, 'blindfold')
-        if itemCount > 0 then
-            RemoveItem(_source, 'blindfold', 1)
-        else
-            passed = false
-            Notify(_source, Config.Lang.noitem, 4000)
+    if player ~= nil then
+        if Config.blindfolditem and toggle == true then
+            local itemCount = GetItemCount(_source, 'blindfold')
+            if itemCount > 0 then
+                SubItem(_source, 'blindfold', 1)
+            else
+                passed = false
+                Notify(_source, Config.lang.noitem)
+            end
         end
-    end
 
-    if passed then
-        local targetId = (player == 'self') and _source or player
-        local playerSex, comps = GetCharacterData(targetId)
-        TriggerClientEvent('lxrblindfold:togblindfold', targetId, playerSex, comps, toggle)
+        if passed then
+            if player == 'self' then
+                player = _source
+            end
+
+            local skin, comps = GetCharacterData(player)
+            local playerSex   = string.gsub(tostring(skin['sex'] or 'male'), 'mp_', '')
+
+            TriggerClientEvent('lxrblindfold:togblindfold', player, playerSex, comps, toggle)
+        end
+    else
+        Notify(_source, Config.lang.noplayers)
     end
 end)
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 USABLE ITEM REGISTRATION
--- ═══════════════════════════════════════════════════════════════════════════════
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ USABLE ITEM REGISTRATION ██████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
-if Config.BlindFoldItem then
-    if Framework == 'lxr-core' or Framework == 'rsg-core' then
-        Inv.RegisterUsableItem('blindfold', function(data)
-            RemoveItem(data.source, 'blindfold', 1)
-            TriggerClientEvent('lxrblindfold:blindfolditem', data.source)
-            Inv.CloseInv(data.source)
-        end)
-    elseif Framework == 'vorp_core' then
-        exports['vorp_inventory']:registerUsableItem('blindfold', function(data)
-            RemoveItem(data.source, 'blindfold', 1)
-            TriggerClientEvent('lxrblindfold:blindfolditem', data.source)
-        end)
-    end
+if Config.blindfolditem then
+    RegisterUsableItem('blindfold', function(data)
+        SubItem(data.source, 'blindfold', 1)
+        TriggerClientEvent('lxrblindfold:blindfolditem', data.source)
+        CloseInv(data.source)
+    end)
 end

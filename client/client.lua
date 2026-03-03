@@ -1,30 +1,44 @@
-local active = false
+--[[
+    ██╗     ██╗  ██╗██████╗       ██████╗ ██╗     ██╗███╗   ██╗██████╗ ███████╗ ██████╗ ██╗     ██████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔══██╗██║     ██║████╗  ██║██╔══██╗██╔════╝██╔═══██╗██║     ██╔══██╗
+    ██║      ╚███╔╝ ██████╔╝█████╗██████╔╝██║     ██║██╔██╗ ██║██║  ██║█████╗  ██║   ██║██║     ██║  ██║
+    ██║      ██╔██╗ ██╔══██╗╚════╝██╔══██╗██║     ██║██║╚██╗██║██║  ██║██╔══╝  ██║   ██║██║     ██║  ██║
+    ███████╗██╔╝ ██╗██║  ██║      ██████╔╝███████╗██║██║ ╚████║██████╔╝██║     ╚██████╔╝███████╗██████╔╝
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═════╝
 
+    🐺 LXR Blindfold — Client Script
+]]
+
+local active      = false
 local selfblinded = false
 
-if Config.escape.active then
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 ESCAPE MECHANIC THREAD
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+if Config.Escape.active then
     Citizen.CreateThread(function()
         active = true
         while true do
             Wait(0)
             if active then
-                if IsControlJustPressed(0, Config.escape.button) then
+                if IsControlJustPressed(0, Config.Escape.button) then
                     SendNUIMessage({
-                        type = 'escapekeypress',
+                        type  = 'escapekeypress',
                         state = true
                     })
-    
+
                     local rando = math.random(0, 5000)
-    
-                    if Config.escape.lotonumb[rando] then
+
+                    if Config.Escape.lotonumb[rando] then
                         TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
                         active = false
                     end
                 end
-    
-                if IsControlJustReleased(0, Config.escape.button) then
+
+                if IsControlJustReleased(0, Config.Escape.button) then
                     SendNUIMessage({
-                        type = 'escapekeypress',
+                        type  = 'escapekeypress',
                         state = false
                     })
                 end
@@ -33,43 +47,51 @@ if Config.escape.active then
     end)
 end
 
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 CLOTHING / WEARABLE HELPER
+-- ═══════════════════════════════════════════════════════════════════════════════
+
 function SetWearable(pcomps, playerSex, playerPed, toggle)
     for k, v in pairs(pcomps) do
-		local catHash = CategoryDBName[k]
-		if playerSex == "male" then
-			if v <= 0 then
-				if catHash == 0xE06D30CE then
-					Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, 0x662AC34, 0)
-				end
-				Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, catHash, 0);
-				Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0);
-			else
-				if catHash == 0xE06D30CE then
-					Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, 0x662AC34, 0)
-					Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0);
-				end
-				Citizen.InvokeNative(0x59BD177A1A48600A, playerPed, catHash);
-				Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, false, false);
-				Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, true, false);
-			end
-		else
-			if v <= 0 then
-				Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, catHash, 0);
-				Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0);
-			else
-				Citizen.InvokeNative(0x59BD177A1A48600A, playerPed, catHash);
-				Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, false, true);
-				Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, true, true);
-			end
-		end
-		Citizen.Wait(5)
-	end
+        local catHash = CategoryDBName[k]
+        if playerSex == "male" then
+            if v <= 0 then
+                if catHash == 0xE06D30CE then
+                    Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, 0x662AC34, 0)
+                end
+                Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, catHash, 0)
+                Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0)
+            else
+                if catHash == 0xE06D30CE then
+                    Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, 0x662AC34, 0)
+                    Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0)
+                end
+                Citizen.InvokeNative(0x59BD177A1A48600A, playerPed, catHash)
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, false, false)
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, true, false)
+            end
+        else
+            if v <= 0 then
+                Citizen.InvokeNative(0xD710A5007C2AC539, playerPed, catHash, 0)
+                Citizen.InvokeNative(0xCC8CA3E88256E58F, playerPed, 0, 1, 1, 1, 0)
+            else
+                Citizen.InvokeNative(0x59BD177A1A48600A, playerPed, catHash)
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, false, true)
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, playerPed, v, true, true, true)
+            end
+        end
+        Citizen.Wait(5)
+    end
     SendNUIMessage({
-        type = 'toggle',
+        type    = 'toggle',
         visible = toggle,
-        config = Config
+        config  = Config
     })
 end
+
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 CLOSEST PLAYER UTILITY
+-- ═══════════════════════════════════════════════════════════════════════════════
 
 function GetClosestPlayer()
     local players, closestDistance, closestPlayer = GetActivePlayers(), -1, -1
@@ -83,21 +105,19 @@ function GetClosestPlayer()
         usePlayerPed = true
         coords = GetEntityCoords(playerPed)
     end
-    
-    for i=1, #players, 1 do
+
+    for i = 1, #players, 1 do
         local tgt = GetPlayerPed(players[i])
 
         if not usePlayerPed or (usePlayerPed and players[i] ~= playerId) then
-
             local targetCoords = GetEntityCoords(tgt)
-            local distance = #(coords - targetCoords)
+            local distance     = #(coords - targetCoords)
 
             if closestDistance == -1 or closestDistance > distance then
                 closest = {
                     client = players[i],
                     server = GetPlayerServerId(players[i])
                 }
-
                 closestDistance = distance
             end
         end
@@ -105,12 +125,15 @@ function GetClosestPlayer()
     return closest, closestDistance
 end
 
-RegisterNetEvent('bccblindfold:togblindfold')
-AddEventHandler('bccblindfold:togblindfold', function(playerSex, comps, toggle)
-    local playerPed = PlayerPedId()
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 NET EVENTS
+-- ═══════════════════════════════════════════════════════════════════════════════
 
-    local pcomps = json.decode(comps)
-    
+RegisterNetEvent('lxrblindfold:togblindfold')
+AddEventHandler('lxrblindfold:togblindfold', function(playerSex, comps, toggle)
+    local playerPed = PlayerPedId()
+    local pcomps    = json.decode(comps)
+
     if toggle == true then
         if playerSex == "male" then
             pcomps['EyeWear'] = 0x10464C0B
@@ -123,8 +146,8 @@ AddEventHandler('bccblindfold:togblindfold', function(playerSex, comps, toggle)
     SetWearable(pcomps, playerSex, playerPed, toggle)
 end)
 
-RegisterNetEvent('bccblindfold:blindfolditem')
-AddEventHandler('bccblindfold:blindfolditem', function()
+RegisterNetEvent('lxrblindfold:blindfolditem')
+AddEventHandler('lxrblindfold:blindfolditem', function()
     selfblinded = false
     local closestPlayer, closestDistance = GetClosestPlayer()
     if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
@@ -132,72 +155,36 @@ AddEventHandler('bccblindfold:blindfolditem', function()
     end
 end)
 
-if Config.blindfoldcommand then
-    
-    -- Framework-specific client initialization
-    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
-        -- Register commands based on framework
-        RegisterCommand
-    else
-        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
-    end
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 COMMANDS
+-- ═══════════════════════════════════════════════════════════════════════════════
 
-    RegisterCommand
-("blindfold", function(source, args, rawCommand)
+if Config.BlindFoldCommand then
+    RegisterCommand("blindfold", function()
         selfblinded = false
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, true)
         end
-    end, false) 
-end
-
-if Config.blindfoldcommand then
-    
-    -- Framework-specific client initialization
-    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
-        -- Register commands based on framework
-        RegisterCommand
-    else
-        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
-    end
-
-    RegisterCommand
-("blindfoldme", function(source, args, rawCommand)
-        selfblinded = true
-        TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', true)
     end, false)
 
-    
-    -- Framework-specific client initialization
-    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
-        -- Register commands based on framework
-        RegisterCommand
-    else
-        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
-    end
-
-    RegisterCommand
-("unblindfoldme", function(source, args, rawCommand)
-        if selfblinded then
-            TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false) 
+    RegisterCommand("unblindfold", function()
+        local closestPlayer, closestDistance = GetClosestPlayer()
+        if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
+            TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, false)
         end
     end, false)
 end
 
+if Config.BlindFoldSelfCommand then
+    RegisterCommand("blindfoldme", function()
+        selfblinded = true
+        TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', true)
+    end, false)
 
-    -- Framework-specific client initialization
-    if Config.framework == 'lxr-core' or Config.framework == 'qbr-core' or Config.framework == 'rsg-core' then
-        -- Register commands based on framework
-        RegisterCommand
-    else
-        print("Framework not supported, please set to either lxr-core, qbr-core, or rsg-core.")
-    end
-
-    RegisterCommand
-("unblindfold", function(source, args, rawCommand)
-    local closestPlayer, closestDistance = GetClosestPlayer()
-    if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
-        TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, false)
-    end
-end, false)
+    RegisterCommand("unblindfoldme", function()
+        if selfblinded then
+            TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
+        end
+    end, false)
+end

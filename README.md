@@ -1,43 +1,59 @@
-# LXR-Blindfold
-> A blindfold script for RedM, LXRCore, QBRCore, and RSGCore frameworks
+# 🐺 LXR Blindfold
+> **Player Restraint System for RedM** — The Land of Wolves  
+> **Author:** iBoss21 / The Lux Empire · **Store:** [theluxempire.tebex.io](https://theluxempire.tebex.io) · **Discord:** [discord.gg/CrKcWdfd3A](https://discord.gg/CrKcWdfd3A)
+
+---
 
 ## Features
 - Blindfold the nearest player
-- Blindfold yourself!
-- Commands to blindfold
-- Item to blindfold
-- Chance to break free
-- Configurable features and language support for multiple frameworks!
+- Blindfold yourself
+- Commands and item-based blindfold support
+- Chance to break free (configurable)
+- Multi-framework support: **LXR-Core** (primary), **RSG-Core** (primary), **VORP Core** (supported)
+- Fully configurable features and language strings
 
 ## Commands
-* /blindfold
-  - adds blindfold to nearest player
-* /blindfoldme
-  - adds blindfold to yourself
-* /unblindfold
-  - removes blindfold from nearest player
-* /unblindfoldme
-  - removes blindfold from yourself (if you placed it on yourself)
+| Command | Description |
+|---------|-------------|
+| `/blindfold` | Apply blindfold to the nearest player |
+| `/unblindfold` | Remove blindfold from the nearest player |
+| `/blindfoldme` | Apply a blindfold to yourself |
+| `/unblindfoldme` | Remove your self-applied blindfold |
 
 ## Installation
-### Step 1: Download and Install
-* Download this repo.
-* Copy and paste the `lxr-blindfold` folder to `resources/lxr-blindfold`.
-* Add `ensure lxr-blindfold` to your `server.cfg` file.
 
-### Step 2: Optional Configuration for Item Usage
-* _Optional (If you use an item):_ Add the SQL item from `items/blindfold.sql`.
-* _Optional (If you use an item):_ Add the image to the inventory system from `items/blindfold.png`.
+### Step 1 — Download & Install
+1. Download this resource.
+2. Place the `lxr-blindfold` folder into your `resources/` directory.
+3. Add `ensure lxr-blindfold` to your `server.cfg`.
 
-### Step 3: Configure Framework Support
-The script supports LXRCore by default, but also works with QBRCore and RSGCore. Modify the `config.lua` if you need to change framework settings.
+### Step 2 — Framework Configuration
+Open `config.lua` and set your framework:
 
 ```lua
-Config.Framework = 'lxr-core' -- or 'qbr-core', 'rsg-core'
+Config.Framework = 'lxr-core'  -- 'lxr-core' | 'rsg-core' | 'vorp_core'
 ```
 
-## Need More Support? 
-- [LXR Discord]
+### Step 3 — Optional: Item Support
+- Add the SQL from `items/blindfold.sql` to your database.
+- Add `items/blindfold.png` to your inventory image folder.
+- Ensure `Config.BlindFoldItem = true` in `config.lua`.
 
-## Coming Soon!
-- API support for other scripts (police, criminal, etc.)
+## Configuration Reference
+
+```lua
+Config.Framework          = 'lxr-core'  -- Framework to use
+Config.BlindFoldCommand   = true         -- Enable /blindfold & /unblindfold
+Config.BlindFoldSelfCommand = true       -- Enable /blindfoldme & /unblindfoldme
+Config.BlindFoldItem      = true         -- Require item to apply blindfold
+
+Config.Escape = {
+    active   = true,
+    lotonumb = {5, 6, 20},   -- Lucky numbers that break the blindfold (0–5000)
+    button   = 0x760A9C6F,   -- Key to attempt escape (G)
+}
+```
+
+---
+
+© 2026 iBoss21 / The Lux Empire | [wolves.land](https://www.wolves.land) | All Rights Reserved

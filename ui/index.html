@@ -6,10 +6,10 @@
   <body>
     <div id="app">
       <div class="wrapper" v-if="visible">
-        <div class="escape" v-if="config.escape && config.escape.active">
-          <div class="escape-text">{{config.escape.lang.escape}}</div>
-          <div :class="{'escape-button': !opress, 'escape-button-pressed': opress}">{{config.escape.lang.button}}</div>
-        </div>
+        <div class="escape" v-if="config.Escape && config.Escape.active">
+            <div class="escape-text">{{config.Escape.lang.escape}}</div>
+            <div :class="{'escape-button': !opress, 'escape-button-pressed': opress}">{{config.Escape.lang.button}}</div>
+          </div>
       </div>
     </div>
   </body>

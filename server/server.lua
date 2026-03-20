@@ -346,9 +346,10 @@ if Config.blindfolditem then
     local itemName = (Config.Items and Config.Items.blindfold and Config.Items.blindfold.name) or 'blindfold'
 
     RegisterUsableItem(itemName, function(data)
-        SubItem(data.source, itemName, 1)
-        TriggerClientEvent('lxrblindfold:blindfolditem', data.source)
-        CloseInv(data.source)
+        local src = type(data) == 'table' and data.source or data
+        SubItem(src, itemName, 1)
+        TriggerClientEvent('lxrblindfold:blindfolditem', src)
+        CloseInv(src)
     end)
 end
 

@@ -160,13 +160,13 @@ end)
 
 -- Send a notification to a player (server-side)
 local function Notify(source, message)
-    if detectedFramework == 'lxr-core' and CoreObject then
+    if detectedFramework == 'lxr-core' and CoreObject and CoreObject.Functions and CoreObject.Functions.Notify then
         CoreObject.Functions.Notify(source, message, 'error', 4000)
-    elseif detectedFramework == 'rsg-core' and CoreObject then
+    elseif detectedFramework == 'rsg-core' then
+        TriggerClientEvent('ox_lib:notify', source, {title = message, type = 'error', duration = 4000})
+    elseif detectedFramework == 'qbr-core' and CoreObject and CoreObject.Functions and CoreObject.Functions.Notify then
         CoreObject.Functions.Notify(source, message, 'error', 4000)
-    elseif detectedFramework == 'qbr-core' and CoreObject then
-        CoreObject.Functions.Notify(source, message, 'error', 4000)
-    elseif detectedFramework == 'qr-core' and CoreObject then
+    elseif detectedFramework == 'qr-core' and CoreObject and CoreObject.Functions and CoreObject.Functions.Notify then
         CoreObject.Functions.Notify(source, message, 'error', 4000)
     elseif detectedFramework == 'vorp_core' then
         TriggerClientEvent('vorp:TipRight', source, message, 4000)

@@ -34,12 +34,19 @@ local selfblinded = false
 -- ████████████████████████ ESCAPE MECHANIC ███████████████████████████████████████
 -- ████████████████████████████████████████████████████████████████████████████████
 
+-- Build a fast lookup set from the lottery numbers
+local escapeWinningNumbers = {}
+if Config.escape.active then
+    for _, v in ipairs(Config.escape.lotonumb) do
+        escapeWinningNumbers[v] = true
+    end
+end
+
 if Config.escape.active then
     Citizen.CreateThread(function()
-        active = true
         while true do
-            Wait(0)
             if active then
+                Wait(0)
                 if IsControlJustPressed(0, Config.escape.button) then
                     SendNUIMessage({
                         type  = 'escapekeypress',
@@ -48,7 +55,7 @@ if Config.escape.active then
 
                     local rando = math.random(0, 5000)
 
-                    if Config.escape.lotonumb[rando] then
+                    if escapeWinningNumbers[rando] then
                         TriggerServerEvent('lxrblindfold:toggleblindfold', 'self', false)
                         active = false
                     end
@@ -60,6 +67,8 @@ if Config.escape.active then
                         state = false
                     })
                 end
+            else
+                Wait(500)
             end
         end
     end)
@@ -114,20 +123,14 @@ end
 function GetClosestPlayer()
     local players, closestDistance, closestPlayer = GetActivePlayers(), -1, -1
     local playerPed, playerId = PlayerPedId(), PlayerId()
-    local coords, usePlayerPed = coords, false
-    local closest = {}
-
-    if coords then
-        coords = vector3(coords.x, coords.y, coords.z)
-    else
-        usePlayerPed = true
-        coords = GetEntityCoords(playerPed)
-    end
+    local usePlayerPed = true
+    local coords = GetEntityCoords(playerPed)
+    local closest = { client = -1, server = -1 }
 
     for i = 1, #players, 1 do
         local tgt = GetPlayerPed(players[i])
 
-        if not usePlayerPed or (usePlayerPed and players[i] ~= playerId) then
+        if players[i] ~= playerId then
             local targetCoords = GetEntityCoords(tgt)
             local distance     = #(coords - targetCoords)
 
@@ -160,7 +163,7 @@ AddEventHandler('lxrblindfold:togblindfold', function(playerSex, comps, toggle)
         end
     end
 
-    active = true
+    active = toggle
     SetWearable(pcomps, playerSex, playerPed, toggle)
 end)
 
@@ -170,6 +173,8 @@ AddEventHandler('lxrblindfold:blindfolditem', function()
     local closestPlayer, closestDistance = GetClosestPlayer()
     if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
         TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, true)
+    else
+        TriggerServerEvent('lxrblindfold:toggleblindfold', nil, true)
     end
 end)
 
@@ -183,6 +188,8 @@ if Config.blindfoldcommand then
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, true)
+        else
+            TriggerServerEvent('lxrblindfold:toggleblindfold', nil, true)
         end
     end, false)
 
@@ -190,6 +197,8 @@ if Config.blindfoldcommand then
         local closestPlayer, closestDistance = GetClosestPlayer()
         if closestPlayer.client ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('lxrblindfold:toggleblindfold', closestPlayer.server, false)
+        else
+            TriggerServerEvent('lxrblindfold:toggleblindfold', nil, false)
         end
     end, false)
 end

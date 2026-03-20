@@ -347,7 +347,6 @@ if Config.blindfolditem then
 
     RegisterUsableItem(itemName, function(data)
         local src = type(data) == 'table' and data.source or data
-        SubItem(src, itemName, 1)
         TriggerClientEvent('lxrblindfold:blindfolditem', src)
         CloseInv(src)
     end)

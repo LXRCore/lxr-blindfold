@@ -1,7 +1,7 @@
 -- ═══════════════════════════════════════════════════════════════════════════════
--- 🐺 LXR Blindfold - Item SQL
+-- 🐺 LXR Blindfold - Item SQL for RedEM:RP
 -- ═══════════════════════════════════════════════════════════════════════════════
--- Framework: LXR-Core / RSG-Core (shared items table)
+-- Framework: RedEM:RP (redem_inventory items table)
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-INSERT INTO `items` (`item`, `label`, `limit`, `can_remove`, `type`, `usable`) VALUES ('blindfold', 'Blindfold', 10, 1, 'item_standard', 1);
+INSERT INTO `items` (`item`, `label`, `limit`, `can_remove`, `type`, `usable`, `desc`) VALUES ('blindfold', 'Blindfold', 10, 1, 'item_standard', 1, 'A blindfold used to cover someone''s eyes');

@@ -43,6 +43,11 @@ version     '2.0.0'
 
 lua54 'yes'
 
+shared_script {
+    'config.lua',
+    'shared/framework.lua'
+}
+
 server_script {
     'server/server.lua'
 }
@@ -52,12 +57,22 @@ client_script {
     'client/client.lua'
 }
 
-shared_script {
-    'config.lua'
-}
-
 ui_page 'ui/index.html'
 
 files {
-    'ui/**/*'
+    'ui/**/*',
+    'locales/*.lua'
+}
+
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- TEBEX ESCROW - Files visible to buyers after encryption
+-- Protected files (client/**, server/**, shared/**) are NOT listed here
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+escrow_ignore {
+    'config.lua',
+    'fxmanifest.lua',
+    'README.md',
+    'docs/**',
+    'locales/**'
 }

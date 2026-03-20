@@ -185,8 +185,13 @@ local function GetItemCount(source, item)
 
     if detectedFramework == 'lxr-core' then
         return exports['lxr-core']:GetInventory().getItemCount(source, item)
-    elseif detectedFramework == 'rsg-core' then
-        return exports['rsg-core']:GetInventory().getItemCount(source, item)
+    elseif detectedFramework == 'rsg-core' and CoreObject then
+        local Player = CoreObject.Functions.GetPlayer(source)
+        if Player then
+            local itemData = Player.Functions.GetItemByName(item)
+            return itemData and itemData.amount or 0
+        end
+        return 0
     elseif detectedFramework == 'qbr-core' then
         return exports['qbr-core']:GetInventory().getItemCount(source, item)
     elseif detectedFramework == 'qr-core' then
@@ -207,8 +212,11 @@ local function SubItem(source, item, count)
 
     if detectedFramework == 'lxr-core' then
         exports['lxr-core']:GetInventory().subItem(source, item, count)
-    elseif detectedFramework == 'rsg-core' then
-        exports['rsg-core']:GetInventory().subItem(source, item, count)
+    elseif detectedFramework == 'rsg-core' and CoreObject then
+        local Player = CoreObject.Functions.GetPlayer(source)
+        if Player then
+            Player.Functions.RemoveItem(item, count)
+        end
     elseif detectedFramework == 'qbr-core' then
         exports['qbr-core']:GetInventory().subItem(source, item, count)
     elseif detectedFramework == 'qr-core' then
@@ -225,7 +233,7 @@ local function CloseInv(source)
     if detectedFramework == 'lxr-core' then
         exports['lxr-core']:GetInventory().CloseInv(source)
     elseif detectedFramework == 'rsg-core' then
-        exports['rsg-core']:GetInventory().CloseInv(source)
+        TriggerClientEvent('rsg-inventory:client:closeinv', source)
     elseif detectedFramework == 'qbr-core' then
         exports['qbr-core']:GetInventory().CloseInv(source)
     elseif detectedFramework == 'qr-core' then
@@ -241,8 +249,8 @@ end
 local function RegisterUsableItem(item, cb)
     if detectedFramework == 'lxr-core' then
         exports['lxr-core']:GetInventory().RegisterUsableItem(item, cb)
-    elseif detectedFramework == 'rsg-core' then
-        exports['rsg-core']:GetInventory().RegisterUsableItem(item, cb)
+    elseif detectedFramework == 'rsg-core' and CoreObject then
+        CoreObject.Functions.CreateUseableItem(item, cb)
     elseif detectedFramework == 'qbr-core' then
         exports['qbr-core']:GetInventory().RegisterUsableItem(item, cb)
     elseif detectedFramework == 'qr-core' then

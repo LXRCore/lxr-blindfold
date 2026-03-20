@@ -40,7 +40,7 @@ if Config.escape.active then
         while true do
             Wait(0)
             if active then
-                if IsControlJustPressed(0, Config.Escape.button) then
+                if IsControlJustPressed(0, Config.escape.button) then
                     SendNUIMessage({
                         type  = 'escapekeypress',
                         state = true

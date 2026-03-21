@@ -14,6 +14,8 @@
 [![Store](https://img.shields.io/badge/Store-theluxempire.tebex.io-blue)](https://theluxempire.tebex.io)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2)](https://discord.gg/CrKcWdfd3A)
 
+![LXR Blindfold Preview](docs/screenshot.png)
+
 ---
 
 ## ═══════════════════════════════════════════════════════

@@ -14,7 +14,7 @@
 [![Store](https://img.shields.io/badge/Store-theluxempire.tebex.io-blue)](https://theluxempire.tebex.io)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2)](https://discord.gg/CrKcWdfd3A)
 
-![One person placing a blindfold over another person's eyes, with a split view showing the darkened blindfolded perspective](docs/screenshot.png)
+![LXR Blindfold System — Split view showing a captor blindfolding a restrained player in a dimly lit western interior, alongside the blindfolded player's darkened perspective with escape prompt](docs/screenshot.png)
 
 ---
 

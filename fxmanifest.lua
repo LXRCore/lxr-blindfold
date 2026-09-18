@@ -32,7 +32,6 @@ shared_scripts {
     'shared/locale.lua',
     'locales/*.lua',
     'config.lua',
-    'shared/rules.lua',
 }
 
 client_script 'client/main.lua'

@@ -1,0 +1,5 @@
+/* LXR-BLINDFOLD — the dark on top of lxr-ui.css. No colours here: every value is a kit token. */
+.bf-dark { position: fixed; inset: 0; background: var(--lxr-void); }
+.bf-dark.lxr-hidden { display: none; }
+.bf-note { position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); display: flex; align-items: center; gap: var(--lxr-s3); font-size: var(--lxr-text-micro); color: var(--lxr-smoke); }
+.bf-logo { width: 18px; height: 18px; object-fit: contain; opacity: .5; }

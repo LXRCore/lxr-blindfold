@@ -1,78 +1,52 @@
 --[[
-    ██╗     ██╗  ██╗██████╗        ██████╗ ██████╗ ██████╗ ███████╗
-    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
-    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║   ██║██████╔╝█████╗
-    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║   ██║██╔══██╗██╔══╝
-    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗╚██████╔╝██║  ██║███████╗
-    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+    LXR Core - Blindfold
 
-    🐺 LXR Core - Blindfold System
-    Restraint & Roleplay Immersion for RedM
+    Brand:       LXRCore — Lux Empire eXperience RedM Core
+    Product:     wolves.land / The Land of Wolves
+    Developer:   iBoss21 / LXRCore
+    Website:     https://www.lxrcore.com
+    Discord:     https://discord.gg/ZHMKVYyhBa (development)
+    GitHub:      https://github.com/LXRCore
 
-    ═══════════════════════════════════════════════════════════════════════════════
-    SERVER INFORMATION
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    Server:    The Land of Wolves 🐺
-    Developer: iBoss21 / The Lux Empire
-    Website:   https://www.wolves.land
-    Discord:   https://discord.gg/CrKcWdfd3A
-    Store:     https://theluxempire.tebex.io
-
-    ═══════════════════════════════════════════════════════════════════════════════
+    Version: 1.0.0
+    Performance Target: 0.00 ms idle
 
     Framework Support:
-    - LXR Core  (Primary)
-    - RSG Core  (Primary)
-    - VORP Core (Supported)
-    - QBR Core  (Optional)
+    - LXR Core v3 (Native — GetCoreObject / GetLXR)
 
-    ═══════════════════════════════════════════════════════════════════════════════
-    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
+    © 2026 iBoss21 / LXRCore | lxrcore.com | All Rights Reserved
 ]]
 
 fx_version 'cerulean'
-game       'rdr3'
-
+game 'rdr3'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
-
-name        'lxr-blindfold'
-author      'iBoss21 / The Lux Empire'
-description '🐺 LXR Blindfold System | wolves.land | LXR-Core, RSG-Core, VORP Core'
-version     '2.0.0'
-
 lua54 'yes'
 
-shared_script {
+name 'lxr-blindfold'
+author 'iBoss21 / LXRCore'
+description 'LXRCore v3 blindfold: a cloth over the eyes of the restrained'
+version '3.0.0'
+repository 'https://github.com/LXRCore/lxr-blindfold'
+
+shared_scripts {
+    'shared/locale.lua',
+    'locales/*.lua',
     'config.lua',
-    'shared/framework.lua'
+    'shared/rules.lua',
 }
 
-server_script {
-    'server/server.lua'
-}
+client_script 'client/main.lua'
+server_script 'server/main.lua'
 
-client_script {
-    'client/utils.lua',
-    'client/client.lua'
-}
-
-ui_page 'ui/index.html'
+ui_page 'html/index.html'
 
 files {
-    'ui/**/*',
-    'locales/*.lua'
+    'html/index.html',
+    'html/lxr-ui.css',
+    'html/style.css',
+    'html/fonts/*.woff2',
+    'html/app.js',
+    'html/img/*.png',
 }
 
--- ═══════════════════════════════════════════════════════════════════════════════
--- TEBEX ESCROW - Files visible to buyers after encryption
--- Protected files (client/**, server/**, shared/**) are NOT listed here
--- ═══════════════════════════════════════════════════════════════════════════════
-
-escrow_ignore {
-    'config.lua',
-    'fxmanifest.lua',
-    'README.md',
-    'docs/**',
-    'locales/**'
-}
+dependencies { 'lxr-core', 'lxr-interact' }
